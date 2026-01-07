@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <h1 class="logo">CodeAlpha Store</h1>
+  <div class="nav-actions">
+    <a href="../index.html">Home</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</header>
+
+<main class="container checkout-page">
+  <h2>Checkout</h2>
+
+  <div class="checkout-wrapper">
+    <form class="checkout-form">
+      <h3>Shipping Details</h3>
+
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="text" placeholder="Address" required />
+      <input type="text" placeholder="City" required />
+      <input type="text" placeholder="Pincode" required />
+
+      <button type="submit" class="primary-btn full">Place Order</button>
+    </form>
+
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <div class="summary-row">
+        <span>Total</span>
+        <span id="orderTotal">₹0</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../js/cart.js"></script>
+<script>
+  document.getElementById("orderTotal").innerText = "₹" + cartTotal();
+
+  document.querySelector(".checkout-form").addEventListener("submit", e => {
+    e.preventDefault();
+    localStorage.removeItem("cart_items");
+    alert("Order placed successfully!");
+    window.location.href = "../index.html";
+  });
+</script>
+
+</body>
+</html>
