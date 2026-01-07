@@ -45,7 +45,12 @@
 
 <script src="../js/cart.js"></script>
 <script>
-  const USER_ID = "TEMP_USER_ID"; // replace after auth integration
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "login.html";
+  }
 
   document.getElementById("orderTotal").innerText = "₹" + cartTotal();
 
@@ -61,9 +66,11 @@
 
     const res = await fetch("http://localhost:5000/api/orders", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
       body: JSON.stringify({
-        userId: USER_ID,
         items,
         total: cartTotal()
       })
@@ -71,11 +78,11 @@
 
     if (res.ok) {
       localStorage.removeItem("cart_items");
-      alert("Order placed successfully!");
       window.location.href = "orders.html";
     }
   });
 </script>
+
 
 
 </body>

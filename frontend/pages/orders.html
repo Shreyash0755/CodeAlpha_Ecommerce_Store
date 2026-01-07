@@ -50,6 +50,47 @@
 
   </div>
 </main>
+<script>
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login");
+    window.location.href = "login.html";
+  }
+
+  fetch("http://localhost:5000/api/orders/my", {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  })
+    .then(res => res.json())
+    .then(orders => {
+      const list = document.querySelector(".orders-list");
+      list.innerHTML = "";
+
+      if (!orders.length) {
+        list.innerHTML = "<p>No orders found.</p>";
+        return;
+      }
+
+      orders.forEach(o => {
+        list.innerHTML += `
+          <div class="order-card">
+            <div class="order-header">
+              <span>Order #${o._id.slice(-6)}</span>
+              <span class="status ${o.status === "Delivered" ? "delivered" : "processing"}">
+                ${o.status}
+              </span>
+            </div>
+            <div class="order-body">
+              <p><strong>Total:</strong> ₹${o.total}</p>
+              <p><strong>Date:</strong> ${new Date(o.createdAt).toDateString()}</p>
+            </div>
+          </div>
+        `;
+      });
+    });
+</script>
 
 </body>
 </html>
