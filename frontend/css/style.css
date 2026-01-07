@@ -109,6 +109,10 @@ button {
   background: #1D4ED8;
 }
 
+.details-link {
+  text-decoration: none;
+}
+
 .cart-page h2 {
   margin-bottom: 24px;
 }

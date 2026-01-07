@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Product Details</title>
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
 
@@ -11,7 +11,8 @@
   <h1 class="logo">CodeAlpha Store</h1>
   <div class="nav-actions">
     <a href="../index.html">Home</a>
-    <a href="#">Cart</a>
+    <a href="../pages/cart.html">Cart</a>
+
   </div>
 </header>
 
@@ -31,7 +32,21 @@
         long battery life, and premium sound clarity.
       </p>
 
-      <button class="primary-btn">Add to Cart</button>
+      <button class="primary-btn" id="addToCartBtn">Add to Cart</button>
+
+<script src="../js/cart.js"></script>
+<script>
+  const product = {
+    id: "p1",
+    name: "Premium Headphones",
+    price: 2999,
+    image: "https://via.placeholder.com/120"
+  };
+
+  document.getElementById("addToCartBtn")
+    .addEventListener("click", () => addToCart(product));
+</script>
+
     </div>
 
   </div>
