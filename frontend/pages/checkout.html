@@ -45,15 +45,38 @@
 
 <script src="../js/cart.js"></script>
 <script>
+  const USER_ID = "TEMP_USER_ID"; // replace after auth integration
+
   document.getElementById("orderTotal").innerText = "₹" + cartTotal();
 
-  document.querySelector(".checkout-form").addEventListener("submit", e => {
+  document.querySelector(".checkout-form").addEventListener("submit", async e => {
     e.preventDefault();
-    localStorage.removeItem("cart_items");
-    alert("Order placed successfully!");
-    window.location.href = "../index.html";
+
+    const items = getCart().map(i => ({
+      productId: i.id,
+      name: i.name,
+      price: i.price,
+      qty: i.qty
+    }));
+
+    const res = await fetch("http://localhost:5000/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: USER_ID,
+        items,
+        total: cartTotal()
+      })
+    });
+
+    if (res.ok) {
+      localStorage.removeItem("cart_items");
+      alert("Order placed successfully!");
+      window.location.href = "orders.html";
+    }
   });
 </script>
+
 
 </body>
 </html>
