@@ -12,6 +12,10 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -25,13 +29,16 @@ router.post("/register", async (req, res) => {
       password: hashedPassword
     });
 
-    await user.save();
+    await user.save(); // 🔴 THIS inserts into DB
 
     res.status(201).json({ message: "User registered successfully" });
+
   } catch (err) {
+    console.error("Register error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 /**
  * LOGIN
@@ -39,6 +46,10 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields required" });
+    }
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -64,7 +75,9 @@ router.post("/login", async (req, res) => {
         email: user.email
       }
     });
+
   } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

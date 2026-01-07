@@ -23,9 +23,32 @@
     <h2>Create Account</h2>
 
     <form>
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
+      <input
+  type="text"
+  id="name"
+  name="name"
+  placeholder="Name"
+  autocomplete="name"
+  required
+/>
+
+<input
+  type="email"
+  id="email"
+  name="email"
+  placeholder="Email"
+  autocomplete="email"
+  required
+/>
+
+<input
+  type="password"
+  id="password"
+  name="password"
+  placeholder="Password"
+  autocomplete="new-password"
+  required
+/>
 
       <button class="primary-btn full">Register</button>
     </form>
@@ -36,7 +59,36 @@
     </p>
   </div>
 </main>
-<script src="js/auth.js"></script>
+<script>
+ const form = document.querySelector("form");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = form.querySelector('input[name="name"]').value;
+  const email = form.querySelector('input[name="email"]').value;
+  const password = form.querySelector('input[name="password"]').value;
+
+  const res = await fetch("http://localhost:5000/api/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.message || "Registration failed");
+    return;
+  }
+
+  alert("Registration successful ✅");
+  window.location.href = "login.html";
+});
+
+</script>
+
+<script src="../js/auth.js"></script>
 
 </body>
 </html>
