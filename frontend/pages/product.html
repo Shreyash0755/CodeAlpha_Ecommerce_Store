@@ -37,16 +37,24 @@
 
 <script src="../js/cart.js"></script>
 <script>
-  const product = {
-    id: "p1",
-    name: "Premium Headphones",
-    price: 2999,
-    image: "https://via.placeholder.com/120"
-  };
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
 
-  document.getElementById("addToCartBtn")
-    .addEventListener("click", () => addToCart(product));
+  fetch(`http://localhost:5000/api/products/${id}`)
+    .then(res => res.json())
+    .then(p => {
+      document.querySelector(".product-info h2").innerText = p.name;
+      document.querySelector(".price").innerText = "₹" + p.price;
+      document.querySelector(".description").innerText = p.description;
+      document.querySelector(".product-image img").src = p.image;
+
+      document.getElementById("addToCartBtn")
+        .onclick = () => addToCart({
+          id: p._id, name: p.name, price: p.price, image: p.image
+        });
+    });
 </script>
+
 
     </div>
 
