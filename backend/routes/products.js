@@ -10,10 +10,23 @@ router.get("/", async (req, res) => {
 
 // GET single product by id
 router.get("/:id", async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  if (!product) return res.status(404).json({ message: "Product not found" });
-  res.json(product);
+  const { id } = req.params;
+
+  if (!id || id === "null") {
+    return res.status(400).json({ message: "Invalid product ID" });
+  }
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(400).json({ message: "Invalid product ID format" });
+  }
 });
+
 
 // POST create product (admin/dev)
 router.post("/", async (req, res) => {

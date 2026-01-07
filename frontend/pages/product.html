@@ -9,7 +9,8 @@
 
 <header class="navbar">
   <h1 class="logo">PrimeCart</h1>
-  <div class="nav-actions">
+  <div class="nav-actions" id="navActions"></div>
+
     <a href="../index.html">Home</a>
     <a href="../pages/cart.html">Cart</a>
     <a href="orders.html">My Orders</a>
@@ -38,8 +39,12 @@
 <script src="../js/cart.js"></script>
 <script>
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+const id = params.get("id");
 
+if (!id) {
+  alert("No product selected");
+  window.location.href = "../index.html";
+} else {
   fetch(`http://localhost:5000/api/products/${id}`)
     .then(res => res.json())
     .then(p => {
@@ -48,11 +53,16 @@
       document.querySelector(".description").innerText = p.description;
       document.querySelector(".product-image img").src = p.image;
 
-      document.getElementById("addToCartBtn")
-        .onclick = () => addToCart({
-          id: p._id, name: p.name, price: p.price, image: p.image
+      document.getElementById("addToCartBtn").onclick = () =>
+        addToCart({
+          id: p._id,
+          name: p.name,
+          price: p.price,
+          image: p.image
         });
     });
+}
+
 </script>
 
 
@@ -60,6 +70,7 @@
 
   </div>
 </main>
+<script src="js/auth.js"></script>
 
 </body>
 </html>

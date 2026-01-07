@@ -298,3 +298,16 @@ button {
   background: #FEF3C7;
   color: #92400E;
 }
+
+.nav-actions button {
+  background: #EF4444;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nav-actions span {
+  margin-right: 10px;
+  font-weight: 500;
+}

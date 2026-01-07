@@ -10,7 +10,8 @@
 <header class="navbar">
   <h1 class="logo">PrimeCart</h1>
   <input type="text" placeholder="Search products..." />
-  <div class="nav-actions">
+  <div class="nav-actions" id="navActions"></div>
+
     <a href="pages/login.html">Login</a>
 
     <a href="pages/cart.html">Cart</a>
@@ -28,9 +29,10 @@
       <img src="https://via.placeholder.com/300" />
       <h3>Product Name</h3>
       <p class="price">₹999</p>
-      <a href="pages/product.html" class="details-link">
-       <button>View Details</button>
+      <a href="pages/product.html?id=${p._id}">
+         <button>View Details</button>
       </a>
+
   </div>
   </div>
 </main>
@@ -58,6 +60,22 @@
       alert(data.message);
     }
   });
+</script>
+<script>
+  const nav = document.getElementById("navActions");
+
+  if (isLoggedIn()) {
+    const user = getUser();
+    nav.innerHTML = `
+      <span>Hi, ${user?.name || "User"}</span>
+      <a href="pages/orders.html">My Orders</a>
+      <button onclick="logout()">Logout</button>
+    `;
+  } else {
+    nav.innerHTML = `
+      <a href="pages/login.html">Login</a>
+    `;
+  }
 </script>
 
 </body>
