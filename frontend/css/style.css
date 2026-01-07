@@ -334,3 +334,40 @@ button {
 .qty-btn:hover {
   background: #e5e7eb;
 }
+
+/* NAVBAR CONTAINER */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* LOGO */
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* NAV LINKS (Home, Cart, My Orders) */
+.navbar a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+  margin-left: 24px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.navbar a:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+
