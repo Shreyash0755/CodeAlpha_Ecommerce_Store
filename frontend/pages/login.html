@@ -86,6 +86,50 @@
     }
   });
 </script>
+<script>
+  const avatarSlot = document.getElementById("userAvatar");
+
+  if (isLoggedIn()) {
+    const user = getUser();
+    const initials = user.name
+      .split(" ")
+      .map(n => n[0])
+      .join("")
+      .toUpperCase();
+
+    avatarSlot.innerHTML = `
+      <div class="user-menu">
+        <div class="avatar" onclick="toggleDropdown()">
+          ${initials}
+        </div>
+
+        <div class="dropdown" id="userDropdown">
+          <div class="dropdown-user">${user.name}</div>
+          <a href="orders.html">My Orders</a>
+          <button onclick="logout()">Logout</button>
+        </div>
+      </div>
+    `;
+  } else {
+    // 👇 THIS IS WHAT YOU WANT
+    avatarSlot.innerHTML = `
+      <a href="login.html" class="nav-link">Login</a>
+    `;
+  }
+
+  function toggleDropdown() {
+    const dropdown = document.getElementById("userDropdown");
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  document.addEventListener("click", (e) => {
+    const menu = document.querySelector(".user-menu");
+    if (menu && !menu.contains(e.target)) {
+      document.getElementById("userDropdown")?.style.display = "none";
+    }
+  });
+</script>
 
 </body>
 </html>

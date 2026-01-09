@@ -8,7 +8,17 @@ function getUser() {
 }
 
 function logout() {
+  // Clear auth data
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  window.location.href = "/index.html";
+
+  // Detect current path and redirect correctly
+  if (window.location.pathname.includes("/pages/")) {
+    window.location.href = "login.html";
+  } else {
+    window.location.href = "pages/login.html";
+  }
 }
+
+
+
