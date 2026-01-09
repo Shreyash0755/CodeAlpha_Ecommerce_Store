@@ -9,13 +9,14 @@
 
 <header class="navbar">
   <h1 class="logo">PrimeCart</h1>
+
   <div class="nav-actions" id="navActions"></div>
 
-    <a href="../index.html">Home</a>
-    <a href="cart.html">Cart</a>
-    <a href="orders.html">My Orders</a>
+  <a href="../index.html">Home</a>
+  <a href="cart.html">Cart</a>
 
-  </div>
+  <!-- Avatar will appear HERE (same place as My Orders) -->
+  <div id="userAvatar"></div>
 </header>
 
 <main class="container orders-page">
@@ -23,33 +24,8 @@
 
   <div class="orders-list">
 
-    <div class="order-card">
-      <div class="order-header">
-        <span>Order #PC1021</span>
-        <span class="status delivered">Delivered</span>
-      </div>
-
-      <div class="order-body">
-        <p><strong>Product:</strong> Premium Headphones</p>
-        <p><strong>Total:</strong> ₹2,999</p>
-        <p><strong>Date:</strong> 12 Jan 2026</p>
-      </div>
-    </div>
-
-    <div class="order-card">
-      <div class="order-header">
-        <span>Order #PC1022</span>
-        <span class="status processing">Processing</span>
-      </div>
-
-      <div class="order-body">
-        <p><strong>Product:</strong> Wireless Mouse</p>
-        <p><strong>Total:</strong> ₹1,299</p>
-        <p><strong>Date:</strong> 15 Jan 2026</p>
-      </div>
-    </div>
-
-  </div>
+   
+    
 </main>
 <script>
   const token = localStorage.getItem("token");
@@ -93,6 +69,44 @@
     });
 </script>
 <script src="../js/auth.js"></script>
+<script>
+  const avatarSlot = document.getElementById("userAvatar");
 
+  if (isLoggedIn()) {
+    const user = getUser();
+    const initials = user.name
+      .split(" ")
+      .map(n => n[0])
+      .join("")
+      .toUpperCase();
+
+    avatarSlot.innerHTML = `
+      <div class="user-menu">
+        <div class="avatar" onclick="toggleDropdown()">
+          ${initials}
+        </div>
+
+        <div class="dropdown" id="userDropdown">
+          <div class="dropdown-user">${user.name}</div>
+          <a href="orders.html">My Orders</a>
+          <button onclick="logout()">Logout</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function toggleDropdown() {
+    const dropdown = document.getElementById("userDropdown");
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  document.addEventListener("click", (e) => {
+    const menu = document.querySelector(".user-menu");
+    if (menu && !menu.contains(e.target)) {
+      document.getElementById("userDropdown").style.display = "none";
+    }
+  });
+</script>
 </body>
 </html>

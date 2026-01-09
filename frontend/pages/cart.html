@@ -9,15 +9,17 @@
 
 <header class="navbar">
   <h1 class="logo">PrimeCart</h1>
+
   <div class="nav-actions" id="navActions"></div>
 
-    <a href="../index.html">Home</a>
-    <a href="cart.html">Cart</a>
-    <a href="orders.html">My Orders</a>
-    
+  <a href="../index.html">Home</a>
+  <a href="cart.html">Cart</a>
 
-  </div>
+  <!-- Avatar will appear HERE (same place as My Orders) -->
+  <div id="userAvatar"></div>
 </header>
+
+
 
 <main class="container cart-page">
   <h2>Your Cart</h2>
@@ -68,6 +70,45 @@
 <!-- SCRIPTS -->
 <script src="../js/cart.js"></script>
 <script src="../js/auth.js"></script>
+<script>
+  const avatarSlot = document.getElementById("userAvatar");
+
+  if (isLoggedIn()) {
+    const user = getUser();
+    const initials = user.name
+      .split(" ")
+      .map(n => n[0])
+      .join("")
+      .toUpperCase();
+
+    avatarSlot.innerHTML = `
+      <div class="user-menu">
+        <div class="avatar" onclick="toggleDropdown()">
+          ${initials}
+        </div>
+
+        <div class="dropdown" id="userDropdown">
+          <div class="dropdown-user">${user.name}</div>
+          <a href="orders.html">My Orders</a>
+          <button onclick="logout()">Logout</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function toggleDropdown() {
+    const dropdown = document.getElementById("userDropdown");
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  document.addEventListener("click", (e) => {
+    const menu = document.querySelector(".user-menu");
+    if (menu && !menu.contains(e.target)) {
+      document.getElementById("userDropdown").style.display = "none";
+    }
+  });
+</script>
 
 <script>
   function renderCart() {
@@ -135,6 +176,8 @@
 
   renderCart();
 </script>
+
+
 
 </body>
 </html>
